@@ -7,6 +7,7 @@
 #    2. Four Columns - Research, Planning, Doing, Done
 #       1. Optional: Customize Column Count
 ###########################################################################################
+from classes_util import Column, Entry
 
 # Text Wrapping
 def text_wrap(text : str) -> str:
@@ -14,18 +15,19 @@ def text_wrap(text : str) -> str:
     # If text limit is reached, divide, and append \n
     pass
 
-# Define Columns
-class Column:
-    def __init__(self, name : str, content : str):
-        self.headerTop = "="*40
-        self.name = name
-        self.headerBottom = "="*40
-        self.content = content
-        self.footer = "="*40
-
 # Display A Column
-def display_column(columns : int) -> None:
-    pass
+# TODO: INDEXING
+def display_column(column : Column, entries : list) -> None:
+    print(column.headerTop)
+    print(column.name)
+    print(column.headerBottom)
+    display_entries(column.name, entries)
+    print(column.footer)
+
+def display_entries(column_name : str, entries : list) -> None:
+    for entry in entries:
+        print(entry.name)
+        # print(entry.content)
 
 def display_defaults(defaults : int) -> None:
     pass
