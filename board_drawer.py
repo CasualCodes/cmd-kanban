@@ -16,7 +16,7 @@ def text_wrap(text : str) -> str:
     pass
 
 # Display A Column
-# TODO: INDEXING
+# TODO: INDEXING [DONE]
 def display_column(column : Column, entries : list) -> None:
     print(column.headerTop)
     print(column.name)

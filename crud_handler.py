@@ -17,14 +17,15 @@ from classes_util import Entry
 #############
 
 # Create Entries
-# TODO: INDEXING
+# TODO: INDEXING [DONE]
+# TODO: CRUD PROPER
 def create_entry(name : str, content : str, column_name : str):
     entry = Entry(name, content, column_name)
     return entry
 
 # Read Entries
 def read_entry(column : int, index : int):
-    pass
+    return
 
 # Update Entries
 def update_entry(column : int, index : int, text : str):
@@ -51,7 +52,7 @@ def parse_entries():
 #############
 
 # Create Columns
-# TODO: INDEXING
+# TODO: INDEXING [DONE?]
 def create_column(name : str, content : str = ""):
     column = Column(name, content)
     return column
