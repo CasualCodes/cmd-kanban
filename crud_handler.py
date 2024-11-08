@@ -33,6 +33,8 @@ def update_entry(column : int, index : int, text : str):
 
 # Delete Entries
 def delete_entry(column : int, index : int):
+    # POP
+    # GET ENTRY LIST, THEN POP SELF (INDEX)
     pass
 
 # Move Entries
@@ -56,3 +58,29 @@ def parse_entries():
 def create_column(name : str, content : str = ""):
     column = Column(name, content)
     return column
+
+# Read Column
+def read_column(column : int, index : int):
+    return
+
+# Update Column
+def update_column(column : int, index : int, text : str):
+    pass
+
+# Delete Column
+def delete_column(column : int, index : int):
+    # POP
+    # GET COLUMN LIST, THEN POP SELF (INDEX)
+    pass
+
+# Move Column
+def move_column(column : int, index : int, columnTo : int):
+    pass
+
+# Save Columns - Save the entry contents on the file
+def save_columns():
+    pass
+
+# Parse Columns - Parse the text file contents through board_drawer
+def parse_columns():
+    pass
