@@ -24,29 +24,27 @@ def create_entry(name : str, content : str, column_name : str):
     return entry
 
 # Read Entries
-def read_entry(column : int, index : int):
-    return
+def read_entry(entry : Entry) -> None:
+    # print entry contents
+    # print(entry.get_entry().<content>)
+    pass
 
 # Update Entries
 def update_entry(column : int, index : int, text : str):
+    # update entry contents
+    # entry.sent_entry(<content>)
     pass
 
 # Delete Entries
-def delete_entry(column : int, index : int):
+def delete_entry(entry_list : list):
     # POP
     # GET ENTRY LIST, THEN POP SELF (INDEX)
+    # Alternative : NO DELETE FUNCTION
     pass
 
 # Move Entries
 def move_entry(column : int, index : int, columnTo : int):
-    pass
-
-# Save Entries - Save the entry contents on the file
-def save_entries():
-    pass
-
-# Parse Entries - Parse the text file contents through board_drawer
-def parse_entries():
+    # Insert Entry Between two entries in a list
     pass
 
 #############
@@ -75,12 +73,4 @@ def delete_column(column : int, index : int):
 
 # Move Column
 def move_column(column : int, index : int, columnTo : int):
-    pass
-
-# Save Columns - Save the entry contents on the file
-def save_columns():
-    pass
-
-# Parse Columns - Parse the text file contents through board_drawer
-def parse_columns():
     pass
