@@ -5,7 +5,8 @@ import board_drawer
 # import crud_handler
 import command_handler
 import file_manager
-from classes_util import Entry, Column, move_column, move_entry, delete_column, delete_entry
+from classes_util import Entry, Column
+from operations_util import move_column, move_entry, delete_column, delete_entry
 
 # Basic Interface Display
 
@@ -20,16 +21,19 @@ def main():
 
         # TESTING # 1: INITIAL RUN 
         column_name = "Research"
-        column = Column(column_name, "")
+        id : int = 0
+        column = Column(id, column_name, "")
         # column = crud_handler.create_column(column_name) # Create Column
 
         entry_placeholders = {"name" : "value",
-                            "name2" : "value2",
+                            "Lorem Ipsum is simply dummy text." : "value2",
                             "name3" : "value3"}
         entries : Entry = []
+        id : int = 0
         for key, value in entry_placeholders.items(): 
             # entries.append(crud_handler.create_entry(key, value, column_name)) # Create Entry
-            entries.append(Entry(key, value, column_name))
+            entries.append(Entry(id, key, value, column_name))
+            id += 1
 
         board_drawer.display_column(column, entries)
 
@@ -49,6 +53,19 @@ def main():
         board_drawer.display_column(column, entries)
         entries = delete_entry(entries, 2)
         board_drawer.display_column(column, entries)
+
+        # TESTING # 5: MULTI COLUMN RENDERING
+        column.set_column(column.name,entries)
+        entries_2 : Entry = []
+        id : int = 0
+        for key, value in entry_placeholders.items(): 
+            # entries.append(crud_handler.create_entry(key, value, column_name)) # Create Entry
+            entries_2.append(Entry(id, key, value, column_name))
+            id += 1
+        column_2 = Column(1, "Planning", entries_2)
+        entries_2[1].set_entry("Lorem Ipsum is simply dummy text?", "new_value", "Planning")
+        columns = [column, column_2]
+        board_drawer.display_columns(columns)
 
 
 if __name__ == "__main__":
