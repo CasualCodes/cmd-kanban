@@ -51,10 +51,10 @@ def main():
         board_drawer.display_column(column, entries)
         entries = move_entry(entries, 1, 2)
         board_drawer.display_column(column, entries)
-        entries = delete_entry(entries, 2)
-        board_drawer.display_column(column, entries)
+        # entries = delete_entry(entries, 2)
+        # board_drawer.display_column(column, entries)
 
-        # TESTING # 5: MULTI COLUMN RENDERING
+        # TESTING # 5: MULTI COLUMN RENDERING [FAIL]
         column.set_column(column.name,entries)
         entries_2 : Entry = []
         id : int = 0
@@ -63,15 +63,18 @@ def main():
             entries_2.append(Entry(id, key, value, column_name))
             id += 1
         column_2 = Column(1, "Planning", entries_2)
-        entries_2[1].set_entry("Lorem Ipsum is simply dummy text?", "new_value", "Planning")
+        entries_2[1].set_entry("Lorem Ipsum is simply dummy text? dummy text?", "new_value", "Planning")
         columns = [column, column_2]
         board_drawer.display_columns(columns)
 
         # TESTING # 6 : INTER COLUMN MOVE
-        print("\n")
-        board_drawer.display_column(columns[0], columns[0].content)
-        board_drawer.display_column(columns[1], columns[1].content)
-        
+        # print("\n")
+        # board_drawer.display_column(columns[0], columns[0].content)
+        # board_drawer.display_column(columns[1], columns[1].content)
+        columns[0].content = move_entry(columns[0].content, 1, 3, columns[1].content)
+        columns[1].content = move_entry(columns[1].content, 1, 3)
+        board_drawer.display_columns(columns)
+
         # ISSUES : IDS, COLUMN-DISPLAY
 
 if __name__ == "__main__":

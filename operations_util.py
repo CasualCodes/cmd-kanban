@@ -28,7 +28,10 @@ def move_entry(container : list, entry_position : int, entry_destination : int, 
 
     entry : Entry = container[entry_position]
     container.pop(entry_position)
-    container.insert(entry_destination, entry)
+    if (container_to != None):
+        container_to.insert(entry_destination, entry)
+    else:
+        container.insert(entry_destination, entry)
         
     return container
 

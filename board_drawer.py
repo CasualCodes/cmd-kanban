@@ -12,7 +12,7 @@ from math import ceil
 
 # Text Wrapping
 # TODO : DECIDE - Execute Text-Wrapping when storing the text? or only execute it when displaying?
-def text_wrap(text : str, append : str = "") -> str:
+def text_wrap(text : str, append : str = "" , padding : int = 0) -> str:
     text_limit = 25
     # If text limit is reached, divide, and append \n
     # Is there a library for this?
@@ -36,7 +36,7 @@ def text_wrap(text : str, append : str = "") -> str:
             split_string = split_string + text[string_index:string_index+text_limit] + " "*(text_limit-len(text)) + append + "\n"
             string_index = string_index + text_limit
         else:
-            split_string = split_string + text[string_index:string_index+text_limit] + "\n"
+            split_string = split_string + text[string_index:string_index+text_limit] + "\n" 
             string_index = string_index + text_limit
     return split_string[0:(len(split_string)-1)]
 
@@ -52,48 +52,57 @@ def display_column(column : Column, entries : list) -> None:
 def display_columns(column_list : list) -> None:
     padding = 40
 
+    # HEADERS #
     display = ""
     for column in column_list:
-        display = display + column.headerTop + " "*(padding-len(column.headerTop)) + "  "
+        display += column.headerTop + " "*(padding-len(column.headerTop)) + "  "
     print(display)
     display = ""
     for column in column_list:
-        display = display + column.name + " "*(padding-len(column.name)) + "  "
+        display += column.name + " "*(padding-len(column.name)) + "  "
     print(display)
     display = ""
     for column in column_list:
-        display = display + column.headerBottom + " "*(padding-len(column.headerBottom)) + "  "
+        display += column.headerBottom + " "*(padding-len(column.headerBottom)) + "  "
     print(display)
 
-    entry_count = 0
+    ################################################################
+    # DELETE THIS CODE IF YOU MANAGE TO IMPLEMENT A BETTER SOLUTION
+    ################################################################
+    column_entry_counts = []
     for column in column_list:
-        entry_count += len(column.content)
+        column_entry_counts.append(len(column.content))
     display = ""
-    turns = ceil(entry_count/len(column_list))
+    turns = max(column_entry_counts)
+    
     for turn in range(turns):
-        # backlogs = []
+        backlogs = []
         for column in column_list:
             try:
                 display += text_wrap(f"[{column.content[turn].id}] {column.content[turn].name}", " [e] [mv] [rm]")
                 border = display.rfind(" [e] [mv] [rm]")
                 # CONSIDERATION : TEXT WRAPPING. CONTINUE OR CANCEL?
                 # TODO : LIMIT DISPLAY WRAPPING TO 2 LINES / CHUNKS
-                # backlogs.append(display[border+len(" [e] [mv] [rm]")+1:len(display)])
+                backlogs.append(display[border+len(" [e] [mv] [rm]")+1:len(display)])
                 display = display[0:border+len(" [e] [mv] [rm]")] + " "*(padding-(25 + len(" [e] [mv] [rm]"))) + "  " 
             except (Exception):
-                display += ""
+                display += " "*(padding) + "  "
+                backlogs.append('')
         
         print(display)
         display = ""
         # CONSIDERATION : TEXT WRAPPING. CONTINUE OR CANCEL?
         # TODO : LIMIT DISPLAY WRAPPING TO 2 LINES / CHUNKS
-        # for backlog in backlogs:
-        #     display += backlog + " "*(padding-len(backlog)) + "  "
-        # print(display)
-        # display = ""
+        # print(backlogs)
+        for backlog in backlogs:
+            display += backlog + " "*(padding-len(backlog)) + "  "
+        print(display)
+        display = ""
 
+    # footers #
+    display = ""
     for column in column_list:
-        display = display + column.footer + " "*(padding-len(column.footer)) + "  "
+        display += column.footer + " "*(padding-len(column.footer)) + "  "
     print(display)
     
 
