@@ -50,7 +50,6 @@ def display_column(column : Column, entries : list) -> None:
     print(column.footer)
 
 def display_columns(column_list : list) -> None:
-    "========================================"
     padding = 40
 
     display = ""
@@ -72,19 +71,26 @@ def display_columns(column_list : list) -> None:
     display = ""
     turns = ceil(entry_count/len(column_list))
     for turn in range(turns):
+        # backlogs = []
         for column in column_list:
             try:
                 display += text_wrap(f"[{column.content[turn].id}] {column.content[turn].name}", " [e] [mv] [rm]")
                 border = display.rfind(" [e] [mv] [rm]")
                 # CONSIDERATION : TEXT WRAPPING. CONTINUE OR CANCEL?
-                # double_display = display[border+len(" [e] [mv] [rm]"):len(display)]
+                # TODO : LIMIT DISPLAY WRAPPING TO 2 LINES / CHUNKS
+                # backlogs.append(display[border+len(" [e] [mv] [rm]")+1:len(display)])
                 display = display[0:border+len(" [e] [mv] [rm]")] + " "*(padding-(25 + len(" [e] [mv] [rm]"))) + "  " 
             except (Exception):
                 display += ""
-        # CONSIDERATION : TEXT WRAPPING. CONTINUE OR CANCEL?
-        # display += double_display
+        
         print(display)
         display = ""
+        # CONSIDERATION : TEXT WRAPPING. CONTINUE OR CANCEL?
+        # TODO : LIMIT DISPLAY WRAPPING TO 2 LINES / CHUNKS
+        # for backlog in backlogs:
+        #     display += backlog + " "*(padding-len(backlog)) + "  "
+        # print(display)
+        # display = ""
 
     for column in column_list:
         display = display + column.footer + " "*(padding-len(column.footer)) + "  "

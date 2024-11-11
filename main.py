@@ -67,6 +67,12 @@ def main():
         columns = [column, column_2]
         board_drawer.display_columns(columns)
 
+        # TESTING # 6 : INTER COLUMN MOVE
+        print("\n")
+        board_drawer.display_column(columns[0], columns[0].content)
+        board_drawer.display_column(columns[1], columns[1].content)
+        
+        # ISSUES : IDS, COLUMN-DISPLAY
 
 if __name__ == "__main__":
     main()

@@ -15,24 +15,29 @@ from classes_util import Column, Entry
 ##  MOVE  ##
 ############
 # MOVE ENTRY
-def move_entry(container : list, entry_position : int, entry_destination : int) -> list:
-    entry : Entry = container[entry_position]
-    container.insert(entry_destination, entry)
-    container.pop(entry_position)
-    return container
-
-# MOVE COLUMN
-def move_column(container : list, column_position : int, column_destination : int) -> list:
+def move_entry(container : list, entry_position : int, entry_destination : int, container_to : list = None) -> list:
+    ###################################################
     # 1, 2, 3 
-    column : Column = container[column_position]
-    container.insert(column_destination, column)
     # 1, 2, 2, 3 X
     ## DESTINATION should be AFTER intended position ##
     # 1, 2, 3, 2
-    container.pop(column_position)
     # 1, 2, 3 X
     ## DESTINATION should be AFTER intended position ##
     # 1, 3, 2
+    ###################################################
+
+    entry : Entry = container[entry_position]
+    container.pop(entry_position)
+    container.insert(entry_destination, entry)
+        
+    return container
+
+
+# MOVE COLUMN
+def move_column(container : list, column_position : int, column_destination : int) -> list:
+    column : Column = container[column_position]
+    container.insert(column_destination, column)
+    container.pop(column_position)
     return container
 
 ##############
