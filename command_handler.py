@@ -5,6 +5,18 @@
 #    1. Command Mapping
 #    
 ###########################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
 from classes_util import Entry, Column
 from operations_util import get_element, move_entry, delete_entry
 

@@ -7,6 +7,18 @@
 #    2. Four Columns - Research, Planning, Doing, Done
 #       1. Optional: Customize Column Count
 ###########################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
 from classes_util import Column, Entry
 from math import ceil
 

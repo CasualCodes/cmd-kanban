@@ -1,6 +1,19 @@
 ###########################################################################################
 # CMD - Kanban (Python)
 ###########################################################################################
+# COMPONENTS [OVERHAUL]
+###########################################################################################
+# 1. Board Drawer - Draw the [boards/containers], draw entries [Consider placing as functions in a container class]
+# 2. Initializer - Gets data from file_manager.py and starts data
+# 3. Classes Utility - Class Definitions for [Boards/Containers], Entries, and [Containers]
+#   [1.] Container Handler - Contains Functions For Moving Entries
+# 4. Command Handler - contains cmd program operations
+# 5. File Manager - writes data and retrieves data
+# 6. Main - Debug Area, and Main Loop
+# 
+# 
+# 
+###########################################################################################
 import board_drawer
 # import crud_handler
 import command_handler
