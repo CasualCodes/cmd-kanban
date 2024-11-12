@@ -12,7 +12,7 @@ from operations_util import move_column, move_entry, delete_column, delete_entry
 
 def main():
     # Startup Settings [DEBUGGING]
-    DEBUG : int = 1
+    DEBUG : int = 2
 
     if (DEBUG == 0):
     
@@ -108,6 +108,7 @@ def main():
         print("\n\n\n")
         board_drawer.display_columns(three_cols)
         command_handler.column_select(three_cols)
+        board_drawer.display_columns(three_cols)
         
 
 

@@ -17,16 +17,20 @@
 # Define Entries
 class Entry:
     # CREATE
-    def __init__(self, id : int, name : str, content : str, column_name : str): # -> Entry
+    def __init__(self, id, name : str, content : str, column_name : str): # -> Entry
         self.id = str(id)
         self.name = name
         self.content = content
         self.column = column_name
 
+    ############
+    ## UNUSED ##
+    ############
     # GET (READ)
     def get_entry(self): # -> Entry
         return self
-    
+    ############
+
     # SET (UPDATE)
     def set_entry(self, entry_name : str, entry_content : str, entry_column : str) -> None:
         if (entry_name == ""):
@@ -48,7 +52,7 @@ class Entry:
 # Define Columns
 class Column:
     # CREATE
-    def __init__(self, id : int, name : str, content : list = []): # -> Column
+    def __init__(self, id, name : str, content : list = []): # -> Column
         self.id = str(id)
         self.headerTop = "="*40
         self.name = name
@@ -56,10 +60,13 @@ class Column:
         self.content : list = content
         self.footer = "="*40
 
+    ############
+    ## UNUSED ##
+    ############
     # GET (READ)
-    def get_column(self, name=""): # -> Column
-        if (name != "" and name == self.name):
-            return self
+    def get_column(self): # -> Column
+        return self
+    ############
 
     # SET (UPDATE)
     def set_column(self, column_name: str, content : list = "") -> None:
@@ -68,10 +75,3 @@ class Column:
         else:
             self.name = column_name
             self.content = content
-    
-###############
-## CONTAINER ##
-###############
-class Container:
-    def __init__(self, content : list = []):
-        self.content : list = content

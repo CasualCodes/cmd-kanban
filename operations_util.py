@@ -32,10 +32,7 @@ def move_entry(container : list, entry_position : int, entry_destination : int, 
         container_to.insert(entry_destination, entry)
     else:
         container.insert(entry_destination, entry)
-        
     return container
-
-
 # MOVE COLUMN
 def move_column(container : list, column_position : int, column_destination : int) -> list:
     column : Column = container[column_position]
@@ -56,3 +53,12 @@ def delete_entry(container : list, entry_position) -> list:
 def delete_column(container : list, column_position) -> list:
     container.pop(column_position)
     return container
+
+###########
+##  GET  ##
+###########
+def get_element(container : list, name : str):
+    for element in container:
+        if (name == element.name):
+            return element
+    return None
