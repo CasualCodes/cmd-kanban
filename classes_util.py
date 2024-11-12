@@ -14,7 +14,6 @@
 #############
 ## ENTRIES ##
 #############
-
 # Define Entries
 class Entry:
     # CREATE
@@ -58,8 +57,9 @@ class Column:
         self.footer = "="*40
 
     # GET (READ)
-    def get_column(self): # -> Column
-        return self
+    def get_column(self, name=""): # -> Column
+        if (name != "" and name == self.name):
+            return self
 
     # SET (UPDATE)
     def set_column(self, column_name: str, content : list = "") -> None:
@@ -69,3 +69,9 @@ class Column:
             self.name = column_name
             self.content = content
     
+###############
+## CONTAINER ##
+###############
+class Container:
+    def __init__(self, content : list = []):
+        self.content : list = content

@@ -15,8 +15,36 @@ def main():
     DEBUG : int = 1
 
     if (DEBUG == 0):
+    
+        """ Initial Requirements
+        Main Loop:
+        0. Intialize Defaults
+            Create Initial Column Container
+            Create Default Columns
+        1. Render Columns
+
+        2. Ask User Input > Select Column
+        
+        3. Ask User Input > Entry CRUD
+            Create
+            Read
+            Update
+            Delete
+
+            ! Affects Entry Container (AKA Column)
+        
+        Repeat Loop : Until User Enters 'exit'
+        """
+    
         pass
+
     if (DEBUG == 1):
+
+        
+        pass
+
+
+    if (DEBUG == 2):
         # Run Testing Code
 
         # TESTING # 1: INITIAL RUN 
@@ -75,7 +103,32 @@ def main():
         columns[1].content = move_entry(columns[1].content, 1, 3)
         board_drawer.display_columns(columns)
 
-        # ISSUES : IDS, COLUMN-DISPLAY
+        # TESTING # 7 : COMMANDS [FAIL - NEEDS RETHINKING]
+        three_cols = initialize_columns()
+        print("\n\n\n")
+        board_drawer.display_columns(three_cols)
+        command_handler.column_select(three_cols)
+        
+
+
+def initialize_columns() -> list:
+    column_names = ["Planning", "Doing", "Done"]
+    columns = []
+    i = 0
+    for column_name in column_names:
+
+        entry_placeholders = {"name" : "value",
+                            "Lorem Ipsum is simply dummy text." : "value2",
+                            "name3" : "value3"}
+        entries : Entry = []
+        id : int = 0
+        for key, value in entry_placeholders.items(): 
+            # entries.append(crud_handler.create_entry(key, value, column_name)) # Create Entry
+            entries.append(Entry(id, key, value, column_name))
+            id += 1
+        
+        columns.append(Column(i, column_name, entries))
+    return columns
 
 if __name__ == "__main__":
     main()
