@@ -15,7 +15,7 @@ from classes_util import Column, Entry
 ##  MOVE  ##
 ############
 # MOVE ENTRY
-def move_entry(container : list, entry_position : int, entry_destination : int, container_to : list = None) -> list:
+def move_entry(container : list, entry_position : int, entry_destination : int, container_to : list = None, entry : Entry = None) -> list:
     ###################################################
     # 1, 2, 3 
     # 1, 2, 2, 3 X
@@ -57,8 +57,8 @@ def delete_column(container : list, column_position) -> list:
 ###########
 ##  GET  ##
 ###########
-def get_element(container : list, name : str):
+def get_element(container : list, name : int):
     for element in container:
-        if (name == element.name):
+        if (name == element.id):
             return element
     return None

@@ -12,7 +12,7 @@ from operations_util import move_column, move_entry, delete_column, delete_entry
 
 def main():
     # Startup Settings [DEBUGGING]
-    DEBUG : int = 2
+    DEBUG : int = 1
 
     if (DEBUG == 0):
     
@@ -39,9 +39,12 @@ def main():
         pass
 
     if (DEBUG == 1):
-
-        
-        pass
+        three_cols = initialize_columns()
+        # ITERATIVE LOOP TEST : COMMANDS (PRE MAJOR OVERHAUL)
+        while (input("Exit?") != 'exit'):
+            board_drawer.display_columns(three_cols)
+            command_handler.column_select(three_cols)
+            board_drawer.display_columns(three_cols)
 
 
     if (DEBUG == 2):
@@ -129,6 +132,7 @@ def initialize_columns() -> list:
             id += 1
         
         columns.append(Column(i, column_name, entries))
+        i+=1
     return columns
 
 if __name__ == "__main__":
