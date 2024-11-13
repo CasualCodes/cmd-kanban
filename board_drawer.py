@@ -7,17 +7,26 @@
 #    2. Four Columns - Research, Planning, Doing, Done
 #       1. Optional: Customize Column Count
 ###########################################################################################
-
-
-
-
-
-
-
-
-
-
-
+# 
+# Drawer:
+# def __init__(self, width : int = 0, height : int = 0):
+# > self.canvas = ""
+# > self.canvas_paramenters = []
+# set_canvas(self, width : int = 0, height : int = 0): sets width and height of the canvas bordered by #s 
+# > zero is considered dynamic.
+# > sets canvas parameters
+#
+# add_element(self, element): checks element type and sets to canvas according to element
+# > if Container / List: add columns
+# > if Column: draw borders and name and command map (to the left of name), then add entries, then add footer
+# > if Entry : draw entry, with text wrap (limit to two lines and then ...), with command map to the right
+#
+# draw_canvas(self):
+# > draws canvas
+# 
+# Utility Functions:
+# text_wrap(string_limit, string): returns a string with \n to emulate string wrapping
+###########################################################################################
 
 from classes_util import Column, Entry
 from math import ceil

@@ -48,10 +48,38 @@ def main():
         
         Repeat Loop : Until User Enters 'exit'
         """
+
+        # Initialize / Load Data #
+        # columns = initializer.retrieve_columns
+        # if (columns == None): 
+        #     columns = initializer.initialize_defaults()
+
+        # Print Board #
+        # drawer.set_board(135)
+        # drawer.add_element(columns)
+        # drawer.draw_board()
+
+        # Get Input #
+        # command_handler.select_column()
+        #     # > clear input, redraw board
+
+        # > redraw board
+        # Exit Prompt #
+        # continue = input("Continue? [y/n]")
+        # if (continue == 'y'):
+        #     while (continue != 'n'):
+        #         # > repeat all
+        # else:
+        #     pass
     
         pass
 
+    ## OVERHAUL TESTS
     if (DEBUG == 1):
+        pass
+
+    ## OLD ITERATIVE LOOP TESTS
+    if (DEBUG == 2):
         three_cols = initialize_columns()
         # ITERATIVE LOOP TEST : COMMANDS (PRE MAJOR OVERHAUL)
         while (input("Exit?") != 'exit'):
@@ -59,8 +87,8 @@ def main():
             command_handler.column_select(three_cols)
             board_drawer.display_columns(three_cols)
 
-
-    if (DEBUG == 2):
+    ## OLD TESTS
+    if (DEBUG == 3):
         # Run Testing Code
 
         # TESTING # 1: INITIAL RUN 
