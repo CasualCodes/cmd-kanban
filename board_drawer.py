@@ -31,24 +31,7 @@
 from classes_util import Column, Entry
 from math import ceil
 
-# Display A Column
-# TODO: INDEXING [DONE]
-def display_column(column : Column, entries : list) -> None:
-    print(column.headerTop)
-    print(column.name)
-    print(column.headerBottom)
-    display_entries(column.name, entries) # display_entries(column.name, column.content)
-    print(column.footer)
-
-def display_entry(entry : Entry) -> None:
-    # e - edit
-    # mv - move
-    # rm - remove
-    print(text_wrap(f"[{entry.id}] {entry.name}", " [e] [mv] [rm]"))
-
-def display_entries(column_name : str, entries : list) -> None:
-    for entry in entries:
-        display_entry(entry)
+# TODO : 
 
 # Text Wrapping
 # TODO : DECIDE - Execute Text-Wrapping when storing the text? or only execute it when displaying?
@@ -83,6 +66,58 @@ def text_wrap(text : str, append : str = "" , padding : int = 0) -> str:
             split_string = split_string + text[string_index:string_index+text_limit] + "\n" 
             string_index = string_index + text_limit
     return split_string[0:(len(split_string)-1)]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Display A Column
+# TODO: INDEXING [DONE]
+def display_column(column : Column, entries : list) -> None:
+    print(column.headerTop)
+    print(column.name)
+    print(column.headerBottom)
+    display_entries(column.name, entries) # display_entries(column.name, column.content)
+    print(column.footer)
+
+def display_entry(entry : Entry) -> None:
+    # e - edit
+    # mv - move
+    # rm - remove
+    print(text_wrap(f"[{entry.id}] {entry.name}", " [e] [mv] [rm]"))
+
+def display_entries(column_name : str, entries : list) -> None:
+    for entry in entries:
+        display_entry(entry)
+
+
 
 def display_columns(column_list : list) -> None:
     padding = 40
