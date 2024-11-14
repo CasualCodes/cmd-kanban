@@ -21,8 +21,10 @@ class Entry:
         self.content : str = content
 
     def set(self, name : str, content : str) -> None:
-        self.name : str = name
-        self.content : str = content
+        if (name != None):
+            self.name : str = name
+        if (content != None):
+            self.content : str = content
 
 #############
 ## COLUMNS ##
@@ -35,6 +37,7 @@ class Column:
         self.length : int = length
 
     def set(self, name: str, content : list = []) -> None:
-        self.name : str = name
+        if (name != None):
+            self.name : str = name
         if (content != []):
             self.content : list = content

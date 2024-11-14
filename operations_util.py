@@ -1,11 +1,8 @@
 ###########################################################################################
 # CMD - Kanban (Python)
 ###########################################################################################
-# move_element - appends element / attaches element to a position / column
-# add_element - appends element to a list
-# remove_element - removes element from a list
-# get_element - returns element from a list
-###########################################################################################
+
+from classes_util import Column, Entry
 
 ################
 ## OPERATIONS ##
@@ -27,7 +24,7 @@ def move_element(container : list, element, container_to : list = None, element_
             remove_element(container, remove)
 
 # Add / Append Element
-# OPTIONAL : ADD POSITION
+# TODO OPTIONAL : ADD POSITION
 def add_element(container : list, element):
     container.append(element)
 
@@ -39,12 +36,19 @@ def remove_element(container : list, element_identifier : int):
 def get_element(container : list, element_identifier : int):
     return container[element_identifier]
 
+# NOTE : READ / UPDATE is addressed by board_drawer and <object>., DELETE is addressed by garbage collection and remove_element
+# TODO : WHERE IS THE DICT FROM?
+def create_entries(entries_data : dict) -> list:
+    entries = []
+    for name, content in entries_data.items():
+        entries.append(Entry(name, content))
+    return entries
 
-
-
-
-
-
+def create_columns(columns_data : dict) -> list:
+    columns = []
+    for name, content in columns_data.items():
+        columns.append(Column(name, content))
+    return columns
 
 
 

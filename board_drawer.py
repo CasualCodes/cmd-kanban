@@ -1,25 +1,6 @@
 ###########################################################################################
 # CMD - Kanban (Python)
 ###########################################################################################
-# Drawer:
-# def __init__(self, width : int = 0, height : int = 0):
-# > self.canvas = ""
-# > self.canvas_paramenters = []
-# set_canvas(self, width : int = 0, height : int = 0): sets width and height of the canvas bordered by #s 
-# > zero is considered dynamic.
-# > sets canvas parameters
-#
-# add_element(self, element): checks element type and sets to canvas according to element
-# > if Container / List: add columns
-# > if Column: draw borders and name and command map (to the left of name), then add entries, then add footer
-# > if Entry : draw entry, with text wrap (limit to two lines and then ...), with command map to the right
-#
-# draw_canvas(self):
-# > draws canvas
-# 
-# Utility Functions:
-# text_wrap(string_limit, string): returns a string with \n to emulate string wrapping
-###########################################################################################
 
 from classes_util import Column, Entry
 from math import ceil, floor
@@ -28,6 +9,8 @@ from math import ceil, floor
 ## DRAWER ##
 ############
 
+# TODO: VALIDATION
+# OPTIONAL TODO : ADDRESS LIMITATION - REDUNDANCY ON DRAWER PADDING AND COLUMN LENGTH
 class Drawer:
     def __init__(self):
         self.canvas = []
@@ -73,10 +56,10 @@ class Drawer:
             1. For Each COLUMN Element:
                 - WRITE HEADERS (ATTATCH EACH COLUMN HEADER TO the canvas list)
                     - for text wrapping, attach a dynamic indent to each before \n
-                        - suggestion: for readability sake, add setting to limit text lines to 2
+                        - suggestion: for readability sake, add setting to limit text lines to 2 <OPTIONAL>
                 - WRITE ENTRIES (ATTACH EACH ENTRY OF EACH COLUMN TO the canvas list)
                     - for text wrapping, attach a dynamic indent to each before \n
-                        - suggestion: for readability sake, add setting to limit text lines to 2
+                        - suggestion: for readability sake, add setting to limit text lines to 2 <OPTIONAL>
                 - WRITE FOOTERS (ATTACH EACH COLUMN FOOTER TO the canvas list)
             """
             # [======================================]
