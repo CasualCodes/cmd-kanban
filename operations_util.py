@@ -1,8 +1,15 @@
 ###########################################################################################
 # CMD - Kanban (Python)
 ###########################################################################################
-# LIST / CONTAINER OPERATIONS UTILITY
+# move_element - appends element / attaches element to a position / column
+# add_element - appends element to a list
+# remove_element - removes element from a list
+# get_element - returns element from a list
 ###########################################################################################
+
+################
+## OPERATIONS ##
+################
 
 # Move Element
 def move_element(container : list, element, container_to : list = None, element_position : int = 0):
@@ -31,6 +38,20 @@ def remove_element(container : list, element_identifier : int):
 # Get Element
 def get_element(container : list, element_identifier : int):
     return container[element_identifier]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## TO DELETE ##

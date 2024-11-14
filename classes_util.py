@@ -1,14 +1,14 @@
 ###########################################################################################
 # CMD - Kanban (Python)
 ###########################################################################################
-# 1. Entries
-#    1. Create
-#    2. Read
-#    3. Update
-# 2. Columns
-#    1. Create
-#    2. Read
-#    3. Update
+# Entry:
+#   init - name, content
+#   set - name, content
+#   get / delete > operations utility
+# Column:
+#   init - name, content(list)
+#   set - name, content(list)
+#   get / delete > operations utility
 ###########################################################################################
 
 #############
@@ -16,23 +16,25 @@
 #############
 # Define Entries
 class Entry:
-    def __init__(self, id, name : str, content : str):
-        self.name = name
-        self.content = content
+    def __init__(self, name : str, content : str):
+        self.name : str = name
+        self.content : str = content
 
-    def set_entry(self, name : str, content : str) -> None:
-        self.name = name
-        self.content = content
+    def set(self, name : str, content : str) -> None:
+        self.name : str = name
+        self.content : str = content
 
 #############
 ## COLUMNS ##
 #############
 # Define Columns
 class Column:
-    def __init__(self, id, name : str, content : list = []):
-        self.name = name
+    def __init__(self, name : str, content : list = [], length : int = 40):
+        self.name : str = name
         self.content : list = content
+        self.length : int = length
 
-    def set_column(self, name: str, content : list = "") -> None:
-        self.name = name
-        self.content = content
+    def set(self, name: str, content : list = []) -> None:
+        self.name : str = name
+        if (content != []):
+            self.content : list = content

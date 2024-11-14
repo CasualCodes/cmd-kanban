@@ -1,13 +1,6 @@
 ###########################################################################################
 # CMD - Kanban (Python)
 ###########################################################################################
-# 1. Board Drawer - An Ascii Display of the Board containing all entries
-#    1. Text Wrapping - All stored text have wrapping
-#       1. How it works: All inputted text are divided into chunks seperated by a new line
-#    2. Four Columns - Research, Planning, Doing, Done
-#       1. Optional: Customize Column Count
-###########################################################################################
-# 
 # Drawer:
 # def __init__(self, width : int = 0, height : int = 0):
 # > self.canvas = ""
@@ -31,33 +24,112 @@
 from classes_util import Column, Entry
 from math import ceil
 
-# TODO : 
+############
+## DRAWER ##
+############
 
+class Drawer:
+    def __init__(self):
+        self.canvas = []
+        self.width = 0
+        self.height = 0 # Potentially Unused
+        self.graphic = ""
+
+        self.default_width = 135
+        self.default_height = 0
+        self.default_graphic = "#"
+
+        # Default Parameter Initialization
+        self.set_canvas(self.width, self.height, self.graphic)
+    
+    def set_canvas(self, width : int = 0, height : int = 0, graphic : str = ""):
+        # Zero = Dynamic
+        if (width == 0):
+            self.width = self.default_width
+        if (height == 0):
+            self.height = self.default_height
+        if (graphic == ""):
+            self.graphic = self.default_graphic
+    
+    # TODO : REIMPLEMENT DRAWING, WITH CANVAS LIMITATIONS
+    def add_element(self, element, container : list = None):
+        if (type(element) == list):
+            for sub_element in element:
+                # TODO : PROPER ALGO [APPENDING MULTI COLUMNS]
+                self.add_element(sub_element)
+        elif (type(element) == Column):
+
+            ## IDEA: TURN CANVAS into a List of strings that are length canvas_length
+            """Pseudo Code
+            1. For Each COLUMN Element:
+                - WRITE HEADERS (ATTATCH EACH COLUMN HEADER TO the canvas list)
+                    - for text wrapping, attach a dynamic indent to each before \n
+                        - suggestion: for readability sake, add setting to limit text lines to 2
+                - WRITE ENTRIES (ATTACH EACH ENTRY OF EACH COLUMN TO the canvas list)
+                    - for text wrapping, attach a dynamic indent to each before \n
+                        - suggestion: for readability sake, add setting to limit text lines to 2
+                - WRITE FOOTERS (ATTACH EACH COLUMN FOOTER TO the canvas list)
+            """
+            ## DRAW BORDERS AND NAME
+            # TODO : PROPER ALGO [APPENDING MULTI COLUMNS]
+            self.canvas.append(element.length*self.graphic + " ")
+            # TODO: TEXT WRAPPING
+            self.canvas += (element.name + " ")
+            self.canvas.append(element.length*self.graphic + " ")
+
+            ## DRAW ENTRIES
+            self.add_element(element.content)
+
+            ## DRAW FOOTER
+            self.canvas.append(element.length*self.graphic + " ")
+
+
+        elif (type(element) == Entry):
+            ## Draw Entry
+            # TODO : ALGO PROPER
+            entry_contents = text_wrap(element).split("\n")
+            
+            # TODO: TEXT WRAPPING
+            self.canvas += entry_contents[0]
+    
+    def draw_canvas(self):
+        print(self.canvas) # TODO : TURN INTO FOR ROW IN CANVAS
+
+#######################
+## UTILITY FUNCTIONS ##
+#######################
 # Text Wrapping
-# TODO : DECIDE - Execute Text-Wrapping when storing the text? or only execute it when displaying?
+# TODO : REDO TEXT LIMIT AND PADDING FUNCTION
+
+# TEXT WRAP
+# Returns wrapped string:
+#   Sample: text_limit = 25
+#       Input: LoremLoremLoremLoremLoremLorem (30 characters)
+#       Output: LoremLoremLoremLoremLorem\nLorem (25 character + newline + 5 characters)
+# Application: Splitting string with \n, printing wrapped text
+def new_text_wrap(text : str) -> str:
+    text_limit = 25
+    wrapped_string = ""
+    string_index = 0
+    
+    chunks = ceil(len(text) / text_limit)
+
+    for i in range(chunks):
+        wrapped_string += text[string_index:string_index+text_limit] + "\n" 
+        string_index += text_limit
+    return wrapped_string
+
+
+
+
+
 def text_wrap(text : str, append : str = "" , padding : int = 0) -> str:
     text_limit = 25
-    # If text limit is reached, divide, and append \n
-    # Is there a library for this?
-
-    # IDEA: https://stackoverflow.com/questions/7111068/split-string-by-count-of-characters
-    # def chunks(s, n):
-    # """Produce `n`-character chunks from `s`."""
-    # for start in range(0, len(s), n):
-    #     yield s[start:start+n]
-
-    # nums = "1.012345e0070.123414e-004-0.1234567891.21423"
-    # for chunk in chunks(nums, 12):
-    #     print chunk
-
     split_string = ""
     string_index = 0
-    # calculate chunks by text_limit
     
-    ################################################################
-    # DELETE THIS CODE IF YOU MANAGE TO IMPLEMENT A BETTER SOLUTION
-    ################################################################
     chunks = ceil(len(text) / text_limit)
+
     for i in range(chunks):
         if (i == 0):
             split_string = split_string + text[string_index:string_index+text_limit] + " "*(text_limit-len(text)) + append + "\n"
@@ -70,25 +142,61 @@ def text_wrap(text : str, append : str = "" , padding : int = 0) -> str:
 
 
 
+def display_columns(column_list : list) -> None:
+    padding = 40
 
+    # HEADERS #
+    display = ""
+    for column in column_list:
+        display += column.headerTop + " "*(padding-len(column.headerTop)) + "  "
+    print(display)
+    display = ""
+    for column in column_list:
+        display += column.name + " "*(padding-len(column.name)) + "  "
+    print(display)
+    display = ""
+    for column in column_list:
+        display += column.headerBottom + " "*(padding-len(column.headerBottom)) + "  "
+    print(display)
 
+    ################################################################
+    # DELETE THIS CODE IF YOU MANAGE TO IMPLEMENT A BETTER SOLUTION
+    ################################################################
+    column_entry_counts = []
+    for column in column_list:
+        column_entry_counts.append(len(column.content))
+    display = ""
+    turns = max(column_entry_counts)
+    
+    for turn in range(turns):
+        backlogs = []
+        for column in column_list:
+            try:
+                display += text_wrap(f"[{column.content[turn].id}] {column.content[turn].name}", " [e] [mv] [rm]")
+                border = display.rfind(" [e] [mv] [rm]")
+                # CONSIDERATION : TEXT WRAPPING. CONTINUE OR CANCEL?
+                # TODO : LIMIT DISPLAY WRAPPING TO 2 LINES / CHUNKS
+                backlogs.append(display[border+len(" [e] [mv] [rm]")+1:len(display)])
+                display = display[0:border+len(" [e] [mv] [rm]")] + " "*(padding-(25 + len(" [e] [mv] [rm]"))) + "  " 
+            except (Exception):
+                display += " "*(padding) + "  "
+                backlogs.append('')
+        
+        print(display)
+        display = ""
+        # CONSIDERATION : TEXT WRAPPING. CONTINUE OR CANCEL?
+        # TODO : LIMIT DISPLAY WRAPPING TO 2 LINES / CHUNKS
+        # print(backlogs)
+        for backlog in backlogs:
+            display += backlog + " "*(padding-len(backlog)) + "  "
+        print(display)
+        display = ""
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # footers #
+    display = ""
+    for column in column_list:
+        display += column.footer + " "*(padding-len(column.footer)) + "  "
+    print(display)
 
 
 
