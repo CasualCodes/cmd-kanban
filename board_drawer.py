@@ -22,7 +22,7 @@
 ###########################################################################################
 
 from classes_util import Column, Entry
-from math import ceil
+from math import ceil, floor
 
 ############
 ## DRAWER ##
@@ -32,33 +32,42 @@ class Drawer:
     def __init__(self):
         self.canvas = []
         self.width = 0
+        self.width_limit = 0
         self.height = 0 # Potentially Unused
         self.graphic = ""
+        self.padding = 0
 
         self.default_width = 135
+        self.default_width_limit = 3
         self.default_height = 0
         self.default_graphic = "#"
 
         # Default Parameter Initialization
         self.set_canvas(self.width, self.height, self.graphic)
     
-    def set_canvas(self, width : int = 0, height : int = 0, graphic : str = ""):
+    def set_canvas(self, width : int = 0, width_limit : int = 0, height : int = 0, graphic : str = ""):
         # Zero = Dynamic
         if (width == 0):
             self.width = self.default_width
+        if (width_limit == 0):
+            self.width_limit = self.default_width_limit
         if (height == 0):
             self.height = self.default_height
         if (graphic == ""):
             self.graphic = self.default_graphic
+
+        # Padding for Indentation [Default Value = 40]
+        self.padding : int = floor(self.width/(self.width_limit*10)) * 10
     
-    # TODO : REIMPLEMENT DRAWING, WITH CANVAS LIMITATIONS
-    def add_element(self, element, container : list = None):
+    # TODO : COLUMN APPENDING <CHECKING>
+    def add_element(self, element, container : list = None, row : int = 0):
+        
         if (type(element) == list):
             for sub_element in element:
-                # TODO : PROPER ALGO [APPENDING MULTI COLUMNS]
+                # TODO : PROPER ALGO [APPENDING MULTI COLUMNS] <CHECKING>
                 self.add_element(sub_element)
-        elif (type(element) == Column):
 
+        elif (type(element) == Column):
             ## IDEA: TURN CANVAS into a List of strings that are length canvas_length
             """Pseudo Code
             1. For Each COLUMN Element:
@@ -70,44 +79,85 @@ class Drawer:
                         - suggestion: for readability sake, add setting to limit text lines to 2
                 - WRITE FOOTERS (ATTACH EACH COLUMN FOOTER TO the canvas list)
             """
-            ## DRAW BORDERS AND NAME
-            # TODO : PROPER ALGO [APPENDING MULTI COLUMNS]
-            self.canvas.append(element.length*self.graphic + " ")
-            # TODO: TEXT WRAPPING
-            self.canvas += (element.name + " ")
-            self.canvas.append(element.length*self.graphic + " ")
+            # [======================================]
+            row = self.add_border(row, element)
+            # [[N] COLUMN_NAME]
+            row = self.add_wrapped_text(row, container, element)
+            # [======================================]
+            row = self.add_border(row, element)
 
-            ## DRAW ENTRIES
+            ## <LIST> [[N] ENTRY_NAME]
             self.add_element(element.content)
 
-            ## DRAW FOOTER
-            self.canvas.append(element.length*self.graphic + " ")
-
+            ## [======================================]
+            row = self.add_border(row, element)
 
         elif (type(element) == Entry):
-            ## Draw Entry
+            ## [[N] ENTRY_NAME [e] [mv] [rm]]
             # TODO : ALGO PROPER
-            entry_contents = text_wrap(element).split("\n")
-            
-            # TODO: TEXT WRAPPING
-            self.canvas += entry_contents[0]
+            row = self.add_wrapped_text(row, container, element)
+        
+    ## DRAW BORDERS AND NAME
+    # TODO : PROPER ALGO [APPENDING MULTI COLUMNS] <CHECKING>
+    def add_border(self, row : int, element):
+        text_value = element.length*self.graphic
+        try:
+            self.canvas[row] += text_value + append_padding(self.padding, text_value)
+        except Exception: # Assumption: activates if self.canvas[row] = None
+            self.canvas.append(text_value + append_padding(self.padding, text_value))
+        row += 1
+        return row
+
+    # TODO: TEXT WRAPPING <CHECKING>
+    def add_wrapped_text(self, row : int, container : list, element):
+        
+        wrapped = text_wrap(element.name).split("\n")
+        wrapped_row = 0
+        wrapped_len = len(wrapped) - 1
+        
+        entry_formatting = ""
+        if (type(element) == Entry):
+            entry_formatting = "[e] [mv] [rm] "
+
+        text_value = f"[{container.index(element)}] {wrapped[wrapped_row]} " + entry_formatting
+        try:
+            self.canvas[row] += text_value + append_padding(self.padding, text_value)
+        except Exception: # Assumption: activates if self.canvas[row] = None
+            self.canvas.append(text_value + append_padding(self.padding, text_value))
+
+        row += 1
+        wrapped_row += 1
+        if (wrapped_len > 1):
+            while(wrapped_row < wrapped_len):
+                text_value = f"{wrapped[wrapped_row]}"
+                try:
+                    self.canvas[row] += text_value + append_padding(self.padding, text_value)
+                except Exception: # Assumption: activates if self.canvas[row] = None
+                    self.canvas.append(text_value + append_padding(self.padding, text_value))
+                row += 1
+                wrapped_row += 1
+
+        return row
     
     def draw_canvas(self):
-        print(self.canvas) # TODO : TURN INTO FOR ROW IN CANVAS
+        for row in self.canvas:
+            print(row)
 
 #######################
 ## UTILITY FUNCTIONS ##
 #######################
 # Text Wrapping
-# TODO : REDO TEXT LIMIT AND PADDING FUNCTION
 
-# TEXT WRAP
-# Returns wrapped string:
-#   Sample: text_limit = 25
-#       Input: LoremLoremLoremLoremLoremLorem (30 characters)
-#       Output: LoremLoremLoremLoremLorem\nLorem (25 character + newline + 5 characters)
-# Application: Splitting string with \n, printing wrapped text
-def new_text_wrap(text : str) -> str:
+"""TEXT WRAP IDEA
+        Returns wrapped string:
+        Sample: 
+            text_limit = 25
+            Input: LoremLoremLoremLoremLoremLorem (30 characters)
+            Output: LoremLoremLoremLoremLorem\nLorem (25 characters + newline + 5 characters)
+        Application: Splitting string with \n, printing wrapped text""" 
+
+# NOTE: Returned String, When \n Split, Is +1 more than intended
+def text_wrap(text : str) -> str:
     text_limit = 25
     wrapped_string = ""
     string_index = 0
@@ -119,11 +169,52 @@ def new_text_wrap(text : str) -> str:
         string_index += text_limit
     return wrapped_string
 
+def append_padding(padding_value : int, text : str):
+    return (" "*(padding_value-len(text))) + " "
+
+if __name__ == "__main__":
+    pass
 
 
 
 
-def text_wrap(text : str, append : str = "" , padding : int = 0) -> str:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###############
+## TO DELETE ##
+###############
+def old_text_wrap(text : str, append : str = "" , padding : int = 0) -> str:
     text_limit = 25
     split_string = ""
     string_index = 0
