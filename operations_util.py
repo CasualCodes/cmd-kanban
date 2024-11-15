@@ -37,23 +37,26 @@ def get_element(container : list, element_identifier : int):
     return container[element_identifier]
 
 # NOTE : READ / UPDATE is addressed by board_drawer and <object>., DELETE is addressed by garbage collection and remove_element
-# TODO : WHERE IS THE DICT FROM?
-def create_entries(entries_data : dict) -> list:
+
+# Create Entries (One Group)
+def create_entries(entries_data : list) -> list:
     entries = []
-    for name, content in entries_data.items():
+    for name, content in entries_data:
         entries.append(Entry(name, content))
     return entries
 
-def create_columns(columns_data : dict) -> list:
+# TODO : ADDRESS HOW ENTRIES ARE INSERTED IN DICT [File Structure]
+# IDEA : If content is a dictionary, create entry with that
+# Create Columns
+def create_columns(columns_data : list) -> list:
     columns = []
-    for name, content in columns_data.items():
-        columns.append(Column(name, content))
+    for name, content in columns_data:
+        entries = create_entries(eval(content))
+        columns.append(Column(name, entries))
     return columns
 
-
-
-
-
+if __name__ == "__main__":
+    pass
 
 
 

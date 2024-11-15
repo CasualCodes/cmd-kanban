@@ -83,7 +83,7 @@ class Drawer:
     ## DRAW BORDERS AND NAME
     # TODO : PROPER ALGO [APPENDING MULTI COLUMNS] <CHECKING>
     def add_border(self, row : int, element):
-        text_value = element.length*self.graphic
+        text_value = self.padding*self.graphic
         try:
             self.canvas[row] += text_value + append_padding(self.padding, text_value)
         except Exception: # Assumption: activates if self.canvas[row] = None

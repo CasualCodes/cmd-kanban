@@ -1,15 +1,7 @@
 ###########################################################################################
 # CMD - Kanban (Python)
 ###########################################################################################
-# Entry:
-#   init - name, content
-#   set - name, content
-#   get / delete > operations utility
-# Column:
-#   init - name, content(list)
-#   set - name, content(list)
-#   get / delete > operations utility
-###########################################################################################
+from typing import List
 
 #############
 ## ENTRIES ##
@@ -25,19 +17,27 @@ class Entry:
             self.name : str = name
         if (content != None):
             self.content : str = content
+    
+    def as_list(self) -> list:
+        return [self.name, self.content]
 
 #############
 ## COLUMNS ##
 #############
 # Define Columns
 class Column:
-    def __init__(self, name : str, content : list = [], length : int = 40):
+    def __init__(self, name : str, content : List[Entry] = []):
         self.name : str = name
-        self.content : list = content
-        self.length : int = length
+        self.content : List[Entry] = content
 
-    def set(self, name: str, content : list = []) -> None:
+    def set(self, name: str, content : List[Entry] = []) -> None:
         if (name != None):
             self.name : str = name
         if (content != []):
-            self.content : list = content
+            self.content : list[Entry] = content
+
+    def as_list(self):
+        content_as_list = []
+        for element in self.content:
+            content_as_list.append(element.as_list())
+        return [self.name, content_as_list]
