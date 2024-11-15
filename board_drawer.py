@@ -82,7 +82,8 @@ class Drawer:
 
             # NOTE : BANDAID SOLUTION
             # ## [======================================]
-            # row = self.add_border(row, element)
+            row += 1
+            row = self.add_border(row)
 
         elif (type(element) == Entry):
             ## [[N] ENTRY_NAME [e] [mv] [rm]]
