@@ -51,7 +51,11 @@ class Drawer:
         if (type(element) == list):
             for sub_element in element:
                 # TODO : PROPER ALGO [APPENDING MULTI COLUMNS] <CHECKING>
-                self.add_element(sub_element, element, row)
+                if (type(sub_element) == Entry):
+                    self.add_element(sub_element, element, row)
+                    row += 1
+                else:
+                    self.add_element(sub_element, element, row)
 
         elif (type(element) == Column):
             
@@ -67,17 +71,18 @@ class Drawer:
                 - WRITE FOOTERS (ATTACH EACH COLUMN FOOTER TO the canvas list)
             """
             # [======================================]
-            row = self.add_border(row, element)
+            row = self.add_border(row)
             # [[N] COLUMN_NAME]
             row = self.add_wrapped_text(row, container, element)
             # [======================================]
-            row = self.add_border(row, element)
+            row = self.add_border(row)
 
             ## <LIST> [[N] ENTRY_NAME]
             self.add_element(element.content, container, row)
 
-            ## [======================================]
-            row = self.add_border(row, element)
+            # NOTE : BANDAID SOLUTION
+            # ## [======================================]
+            # row = self.add_border(row, element)
 
         elif (type(element) == Entry):
             ## [[N] ENTRY_NAME [e] [mv] [rm]]
@@ -88,7 +93,7 @@ class Drawer:
         
     ## DRAW BORDERS AND NAME
     # TODO : PROPER ALGO [APPENDING MULTI COLUMNS] <CHECKING>
-    def add_border(self, row : int, element):
+    def add_border(self, row : int):
         text_value = self.padding*self.graphic
         try:
             self.canvas[row] += text_value + append_padding(self.padding, text_value)
@@ -177,6 +182,7 @@ if __name__ == "__main__":
     # Print Board #
     board = Drawer()
     board.add_element(data)
+    # print(board.canvas)
 
 
     board.draw()
