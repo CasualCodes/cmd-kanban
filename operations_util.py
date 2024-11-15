@@ -44,8 +44,9 @@ def get_element(container : list, index : int):
 # Create Entries (One Group)
 def create_entries(entries_data : list) -> list:
     entries = []
-    for name, content in entries_data:
-        entries.append(Entry(name, content))
+    if (entries_data != None):
+        for name, content in entries_data:
+            entries.append(Entry(name, content))
     return entries
 
 # TODO : ADDRESS HOW ENTRIES ARE INSERTED IN DICT [File Structure]
@@ -53,9 +54,13 @@ def create_entries(entries_data : list) -> list:
 # Create Columns
 def create_columns(columns_data : list) -> list:
     columns = []
-    for name, content in columns_data:
-        entries = create_entries(eval(content))
-        columns.append(Column(name, entries))
+    if (columns_data != None):
+        for name, content in columns_data:
+            if (content == ""):
+                entries = create_entries(content)
+            else:
+                entries = create_entries(eval(content))
+            columns.append(Column(name, entries))
     return columns
 
 if __name__ == "__main__":

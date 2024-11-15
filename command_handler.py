@@ -29,7 +29,7 @@ def column_ops(container : List[Column]):
 
         match mode:
             case 's':
-                column_index = prompter(select_query)
+                column_index = int(prompter(select_query))
 
                 column : Column = get_element(container, column_index)
                 if (column != None):
@@ -37,6 +37,7 @@ def column_ops(container : List[Column]):
                     entry_operations(container, column.content)
                 else:
                     print("Invalid Input : Column Not Found")
+                    delete_line("Invalid Input : Column Not Found")
             case _:
                 print("Closing")
                 return
@@ -44,7 +45,7 @@ def column_ops(container : List[Column]):
 # Entry Operations
 def entry_operations(top_container : list, container : list, default_query : str = "Select Action\n> "):
     while (True):
-        mode_query = "Choose Entry Operation: Edit [e], Move [mv], Remove [rm] Return to Column Select []:"
+        mode_query = "Choose Entry Operation: Add [+], Edit [e], Move [mv], Remove [rm] Return to Column Select []:"
         mode = prompter(mode_query)
         match(mode):
             case '+':
@@ -59,7 +60,7 @@ def entry_operations(top_container : list, container : list, default_query : str
             case 'e':
                 # Call Entry Set [e]
                 sel_query = "Select [ID] Element:"
-                entry_index = prompter(sel_query)
+                entry_index = int(prompter(sel_query))
                 entry : Entry = get_element(container, entry_index)
                 if (entry != None):
                     name_query = "Enter New Entry Name [press enter to not change]:"
@@ -73,7 +74,7 @@ def entry_operations(top_container : list, container : list, default_query : str
             case 'mv':
                 # Call Entry Move [mv]
                 sel_query = "Select [ID] Element:"
-                entry_index = prompter(sel_query)
+                entry_index = int(prompter(sel_query))
                 try:
                     entry : Entry = get_element(container, entry_index)
                 except Exception:
@@ -81,7 +82,7 @@ def entry_operations(top_container : list, container : list, default_query : str
                     print("Invalid Input : Entry Not Found")
 
                 sel_query = "Select Column [Name]:"
-                column_index = prompter(sel_query)
+                column_index = int(prompter(sel_query))
                 try:
                     column : Column = get_element(top_container, column_index)
                 except Exception:
@@ -104,7 +105,7 @@ def entry_operations(top_container : list, container : list, default_query : str
             case 'rm':
                 # Call Delete Entry [rm]
                 sel_query = "Select [ID] Element:"
-                entry_index = prompter(sel_query)
+                entry_index = int(prompter(sel_query))
                 try:
                     entry : Entry = get_element(container, entry_index)
                 except Exception:
@@ -117,6 +118,11 @@ def entry_operations(top_container : list, container : list, default_query : str
 
             case _:
                 return
+
+def exit_program() -> str:
+    exit_prompt = "Close Program? [Y/n]:"
+    prompt = prompter(exit_prompt)
+    return prompt
 
 if __name__ == "__main__":
     pass
