@@ -62,7 +62,6 @@ def main():
         # Get Input #
         # command_handler.select_column()
         #     # > clear input, redraw board
-
         # > redraw board
         # Exit Prompt #
         # continue = input("Continue? [y/n]")

@@ -28,13 +28,16 @@ def move_element(container : list, element, container_to : list = None, element_
 def add_element(container : list, element):
     container.append(element)
 
-# Remove Element
-def remove_element(container : list, element_identifier : int):
-    container.remove(element_identifier)
+# Remove Element BY INDEX
+def remove_element(container : list, index : int):
+    container.remove(index)
 
-# Get Element
-def get_element(container : list, element_identifier : int):
-    return container[element_identifier]
+# Get Element BY INDEX
+def get_element(container : list, index : int):
+    try:
+        return container[index]
+    except Exception:
+        return None
 
 # NOTE : READ / UPDATE is addressed by board_drawer and <object>., DELETE is addressed by garbage collection and remove_element
 
