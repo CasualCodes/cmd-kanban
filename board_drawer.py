@@ -3,6 +3,7 @@
 ###########################################################################################
 
 from classes_util import Column, Entry
+from typing import List
 from math import ceil, floor
 
 ############
@@ -80,10 +81,15 @@ class Drawer:
             ## <LIST> [[N] ENTRY_NAME]
             self.add_element(element.content, container, row)
 
-            # NOTE : BANDAID SOLUTION
+            # # NOTE : BANDAID SOLUTION
             # ## [======================================]
-            row += 1
-            row = self.add_border(row)
+            print(len(element.content))
+            row = self.add_border(row+len(element.content))
+            """IDEA:
+            1. Store container lengths in a list as Stored
+            2. If Stored - 1 (if it exists) is less, add padding to the row stored-1 times
+            3. Else do nothing
+            """
 
         elif (type(element) == Entry):
             ## [[N] ENTRY_NAME [e] [mv] [rm]]
