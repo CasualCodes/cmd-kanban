@@ -20,6 +20,8 @@ class Drawer:
         self.height = 0 # Potentially Unused
         self.graphic = ""
         self.padding = 0
+        
+        self.stored_elements = []
 
         self.default_width = 135
         self.default_width_limit = 3
@@ -81,15 +83,22 @@ class Drawer:
             ## <LIST> [[N] ENTRY_NAME]
             self.add_element(element.content, container, row)
 
-            # # NOTE : BANDAID SOLUTION
             # ## [======================================]
-            print(len(element.content))
-            row = self.add_border(row+len(element.content))
             """IDEA:
             1. Store container lengths in a list as Stored
             2. If Stored - 1 (if it exists) is less, add padding to the row stored-1 times
             3. Else do nothing
             """
+            self.stored_elements.append(len(element.content))
+            print(self.stored_elements[len(self.stored_elements)-2] < self.stored_elements[len(self.stored_elements)-1])
+            if (self.stored_elements[len(self.stored_elements)-2] < self.stored_elements[len(self.stored_elements)-1]):
+                i = 0
+                while (i < (self.stored_elements.index(len(element.content)))):
+                    print(f"in: {row}")
+                    row = self.add_blank_padding(row+len(element.content)) - (len(element.content))
+                    i += 1
+            print(f"out: {row}")
+            row = self.add_border(row+len(element.content))
 
         elif (type(element) == Entry):
             ## [[N] ENTRY_NAME [e] [mv] [rm]]
@@ -107,6 +116,14 @@ class Drawer:
         except Exception: # Assumption: activates if self.canvas[row] = None
             self.canvas.append(text_value + append_padding(self.padding, text_value))
         row += 1
+        return row
+
+    def add_blank_padding(self, row : int):
+        text_value = self.padding*" "
+        try:
+            self.canvas[row] += text_value + append_padding(self.padding, text_value)
+        except Exception: # Assumption: activates if self.canvas[row] = None
+            self.canvas.append(text_value + append_padding(self.padding, text_value))
         return row
 
     # TODO: TEXT WRAPPING <CHECKING>
@@ -182,16 +199,9 @@ def append_padding(padding_value : int, text : str):
 
 from file_manager import initializer
 if __name__ == "__main__":
-    pass
-    # Initialize / Load Data #
     data = initializer()
-
-    # Print Board #
     board = Drawer()
     board.add_element(data)
-    # print(board.canvas)
-
-
     board.draw()
 
 
