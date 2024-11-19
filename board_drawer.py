@@ -79,6 +79,10 @@ class Drawer:
 
             # ## [======================================]
             row = self.add_border(row)
+            i = len(element.content)
+            while (i < max(len(element.content)*tolerance for element in container)):
+                row = self.add_blank_padding(row)
+                i+=1
 
         elif (type(element) == Entry):
             ## [[N] ENTRY_NAME [e] [mv] [rm]]

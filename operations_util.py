@@ -30,7 +30,7 @@ def add_element(container : list, element):
 
 # Remove Element BY INDEX
 def remove_element(container : list, index : int):
-    container.remove(index)
+    container.pop(index)
 
 # Get Element BY INDEX
 def get_element(container : list, index : int):

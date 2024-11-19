@@ -13,9 +13,9 @@ class Entry:
         self.content : str = content
 
     def set(self, name : str, content : str) -> None:
-        if (name != None):
+        if (name != ""):
             self.name : str = name
-        if (content != None):
+        if (content != ""):
             self.content : str = content
     
     def as_list(self) -> list:

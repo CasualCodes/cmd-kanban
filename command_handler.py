@@ -66,11 +66,11 @@ def entry_operations(top_container : list, container : list, default_query : str
                 entry_index = int(prompter(sel_query))
                 entry : Entry = get_element(container, entry_index)
                 if (entry != None):
-                    name_query = "Enter New Entry Name [press enter to not change]:"
+                    name_query = "Enter New Entry Name [enter None to not change]:"
                     name = prompter(name_query)
-                    content_query = "Enter New Entry Contents [press enter to not change]:"
+                    content_query = "Enter New Entry Contents [enter None to not change]:"
                     content = prompter(content_query)
-                    entry.set(content, container.name)
+                    entry.set(name, content)
                 else:
                     print("Invalid Input : Entry Not Found")
 
@@ -84,7 +84,7 @@ def entry_operations(top_container : list, container : list, default_query : str
                     entry = None
                     print("Invalid Input : Entry Not Found")
 
-                sel_query = "Select Column [Name]:"
+                sel_query = "Select: [ID] Column:"
                 column_index = int(prompter(sel_query))
                 try:
                     column : Column = get_element(top_container, column_index)
