@@ -5,6 +5,9 @@
 from classes_util import Entry, Column
 from typing import List
 from operations_util import get_element, move_element, remove_element
+from board_drawer import text_wrap
+from os import system
+from math import ceil, floor
 
 # Delete Previous Line With ANSI Escape Character
 def delete_line(lines : int = 1):
@@ -14,9 +17,9 @@ def delete_line(lines : int = 1):
         iterator += 1
 
 # IDEA : Once user submits input, previous two lines are deleted
-def prompter(prompt_header : str = "Prompt Header:", prompt_input : str = "> "):
+def prompter(prompt_header : str = "Prompt Header:", prompt_input : str = "> ", deln : int = 2):
     user_input = input(f"{prompt_header}\n{prompt_input}")
-    delete_line(2)
+    delete_line(deln)
     return user_input
 
 # Column Operations
@@ -45,7 +48,7 @@ def column_ops(container : List[Column]):
 # Entry Operations
 def entry_operations(top_container : list, container : list, default_query : str = "Select Action\n> "):
     while (True):
-        mode_query = "Choose Entry Operation: Add [+], Edit [e], Move [mv], Remove [rm] Return to Column Select []:"
+        mode_query = "Choose Entry Operation: Read [N], Add [+], Edit [e], Move [mv], Remove [rm] Return to Column Select []:"
         mode = prompter(mode_query)
         match(mode):
             case '+':
@@ -117,7 +120,26 @@ def entry_operations(top_container : list, container : list, default_query : str
                     print("Invalid Input : Entry Not Found")
 
             case _:
-                return
+                if (mode == ""):
+                    return
+                else:
+                    try:
+                        entry : Entry = get_element(container, int(mode))
+                        length = 0
+                        print(40*"=")
+                        length += 3
+                        print(text_wrap(f"[{mode}] {entry.name}", None))
+                        length += ceil(len(f"[{mode}] {entry.name}") / 21)
+                        print(text_wrap(f"Content : {entry.content}", None))
+                        length += ceil(len(f"Content : {entry.content}") / 21)
+                        print(40*"=")
+                        length += 3
+
+                        prompter("Press enter to return", "> ", length)
+                    except Exception:
+                        entry = None
+                        print("Invalid Input : Entry Not Found")
+                    
 
 def exit_program() -> str:
     exit_prompt = "Close Program? [Y/n]:"
@@ -126,70 +148,3 @@ def exit_program() -> str:
 
 if __name__ == "__main__":
     pass
-
-
-
-
-
-
-
-
-# from operations_util import get_element, move_entry, delete_entry
-# # # Command Mapping
-# # def column_select(container : list, default_query : str = "Select Column [Name]\n> "):
-# #     column = input(default_query)
-
-# #     columns = []
-# #     for col in container:
-# #         columns.append(col.id)
-
-# #     if column in columns:
-# #         print(f"Column {column} selected")
-# #         entry_operations(container, get_element(container, column))
-# #     else:
-# #         print("Invalid Input")
-
-# def entry_operations(top_container : list, container : list, default_query : str = "Select Action\n> "):
-#     action = input(default_query)
-
-#     match(action):
-
-#         case '+':
-#             # Call Create Entry [+]
-#             name = input("Enter Entry Name\n> ")
-#             content = input("Enter Entry Contents\n> ")
-#             container.content.append(Entry(len(container.content)+1, name, content, container.name))
-#         case 'e':
-#             # Call Update Entry [e]
-#             name = input("Select Element [ID]\n> ")
-#             entry = get_element(container.content, name)
-#             if (entry != None):
-#                 name = input("Enter New Entry Name\n> ")
-#                 content = input("Enter New Entry Contents\n> ")
-#                 entry.set_entry(name, content, container.name)
-#             else:
-#                 print("Entry does not exist")
-#         case 'mv':
-#             # Call Move Entry   [mv]
-#             name = input("Select Element [ID]\n> ")
-#             entry = get_element(container.content, name)
-#             move_to = input("Select Column [Name]\n> ")
-            
-#             columns = []
-#             for col in top_container:
-#                 columns.append(col.id)
-
-#             if move_to in columns:
-#                 move_entry(container.content, (container.content).index(entry), len(move_to)+1, get_element(top_container,move_to).content)
-#                 print(f"Moved To Column {move_to}")
-#             else:
-#                 print("Invalid Column")
-
-#         case 'rm':
-#             # Call Delete Entry [rm]
-#             name = input("Select Element [ID]\n> ")
-#             entry = get_element(container.content, name)
-#             top_container = delete_entry(container.content, (container.content).index(entry))
-
-#         case _:
-#             print("Invalid Command")
