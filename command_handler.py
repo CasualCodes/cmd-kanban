@@ -5,9 +5,9 @@
 from classes_util import Entry, Column
 from typing import List
 from operations_util import get_element, move_element, remove_element
-from board_drawer import text_wrap
-from os import system
+from board_drawer import text_wrap, Drawer
 from math import ceil, floor
+from time import sleep
 
 # Delete Previous Line With ANSI Escape Character
 def delete_line(lines : int = 1):
@@ -15,6 +15,10 @@ def delete_line(lines : int = 1):
     while (iterator < lines):
         print("\033[1A\x1b[2K", end="")
         iterator += 1
+
+def sleep_delete(lines : int = 1, time : int = 1):
+    sleep(time)
+    delete_line(lines)
 
 # IDEA : Once user submits input, previous two lines are deleted
 def prompter(prompt_header : str = "Prompt Header:", prompt_input : str = "> ", deln : int = 2):
@@ -40,13 +44,15 @@ def column_ops(container : List[Column]):
                     entry_operations(container, column.content)
                 else:
                     print("Invalid Input : Column Not Found")
-                    delete_line("Invalid Input : Column Not Found")
+                    sleep_delete()
             case _:
                 print("Closing")
+                sleep_delete()
                 return
 
 # Entry Operations
 def entry_operations(top_container : list, container : list, default_query : str = "Select Action\n> "):
+    drawer_update = Drawer()
     while (True):
         mode_query = "Choose Entry Operation: Read [N], Add [+], Edit [e], Move [mv], Remove [rm] Return to Column Select []:"
         mode = prompter(mode_query)
@@ -59,6 +65,7 @@ def entry_operations(top_container : list, container : list, default_query : str
                 content = prompter(content_query)
 
                 container.append(Entry(name, content))
+                drawer_update.refresh(top_container)
 
             case 'e':
                 # Call Entry Set [e]
@@ -71,8 +78,10 @@ def entry_operations(top_container : list, container : list, default_query : str
                     content_query = "Enter New Entry Contents [enter None to not change]:"
                     content = prompter(content_query)
                     entry.set(name, content)
+                    drawer_update.refresh(top_container)
                 else:
                     print("Invalid Input : Entry Not Found")
+                    sleep_delete()
 
             case 'mv':
                 # Call Entry Move [mv]
@@ -83,6 +92,7 @@ def entry_operations(top_container : list, container : list, default_query : str
                 except Exception:
                     entry = None
                     print("Invalid Input : Entry Not Found")
+                    sleep_delete()
 
                 sel_query = "Select: [ID] Column:"
                 column_index = int(prompter(sel_query))
@@ -95,15 +105,19 @@ def entry_operations(top_container : list, container : list, default_query : str
                     if (entry != None):
                         # TODO : , element_position : int = 0
                         move_element(container, entry, column.content)
+                        drawer_update.refresh(top_container)
                 elif (entry != None):
                     sel_query = "Select New Position [0 <= N < =no._of_entries]:"
                     position = prompter(sel_query)
                     if (position <= len(container) and position >= 0):
                         move_element(container, entry, column, position)
+                        drawer_update.refresh(top_container)
                     else:
                         print("Invalid Input : Position Invalid")
+                        sleep_delete()
                 else:
                     print("Invalid Input : Entry Not Found")
+                    sleep_delete()
 
             case 'rm':
                 # Call Delete Entry [rm]
@@ -114,10 +128,13 @@ def entry_operations(top_container : list, container : list, default_query : str
                 except Exception:
                     entry = None
                     print("Invalid Input : Entry Not Found")
+                    sleep_delete()
                 if (entry != None):
                     remove_element(container, container.index(entry))
+                    drawer_update.refresh(top_container)
                 else:
                     print("Invalid Input : Entry Not Found")
+                    sleep_delete()
 
             case _:
                 if (mode == ""):
@@ -139,6 +156,7 @@ def entry_operations(top_container : list, container : list, default_query : str
                     except Exception:
                         entry = None
                         print("Invalid Input : Entry Not Found")
+                        sleep_delete(lines=2)
                     
 
 def exit_program() -> str:

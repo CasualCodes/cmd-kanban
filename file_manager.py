@@ -8,10 +8,6 @@ from classes_util import Column, Entry
 from operations_util import create_columns
 filename = "kanban.csv"
 
-"""
-Column-Entry List:
-[ [ name, [[name,content],...]], ... ]
-"""
 ###########################
 ## FILE LOADING / SAVING ##
 ###########################
@@ -70,12 +66,12 @@ def saver(data : List[Column]) -> None:
 
 # VALIDATION
 if __name__ == "__main__":
-    # data = load_csv_data(filename)
-    # test_load = initializer()
-    # print(f"{test_load} \nTEST LOAD NONE: {test_load == None}")
-    # test_struct = [["colname", [ ["entname1", "entcont1"], ["entname2", "entcont2"], ["entname3", "entcont3"] ] ],
-    #                ["colname2", [ ["entname1", "entcont1"], ["entname2", "entcont2"], ["entname3", "entcont3"] ] ]]
-    # save_csv_data(filename, test_struct)
-    # data = load_csv_data(filename)
-    # test_load = initialize(data)
+    data = load_csv_data(filename)
+    test_load = initializer()
+    print(f"{test_load} \nTEST LOAD NONE: {test_load == None}")
+    test_struct = [["colname", [ ["entname1", "entcont1"], ["entname2", "entcont2"], ["entname3", "entcont3"] ] ],
+                   ["colname2", [ ["entname1", "entcont1"], ["entname2", "entcont2"], ["entname3", "entcont3"] ] ]]
+    save_csv_data(filename, test_struct)
+    data = load_csv_data(filename)
+    test_load = initialize(data)
     pass

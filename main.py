@@ -17,14 +17,12 @@ def main():
 
         # Print Board #
         board = Drawer()
-        board.add_element(data)
 
         # Main Loop
         while (True):
             system('cls')
             # Draw the board
             board.refresh(data)
-            board.draw()
             # Command loop
             command_handler.column_ops(data)
             # Exit Prompt

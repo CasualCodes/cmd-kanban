@@ -24,7 +24,6 @@ def move_element(container : list, element, container_to : list = None, element_
             remove_element(container, remove)
 
 # Add / Append Element
-# TODO OPTIONAL : ADD POSITION
 def add_element(container : list, element):
     container.append(element)
 
